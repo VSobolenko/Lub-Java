@@ -1,17 +1,21 @@
 package by.gsu.pms;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Employee {
     private static final int ALLOWANCE = 10;
     private String account;
-    private int expenses;
+    private BigDecimal expenses;
     private int day;
 
     public Employee() {
+        this.account = "not name";
+        this.expenses = new BigDecimal(0);
+        this.day = 0;
     }
 
-    public Employee(String account, int expenses, int day) {
+    public Employee(String account, BigDecimal expenses, int day) {
         this.account = account;
         this.expenses = expenses;
         this.day = day;
@@ -29,11 +33,11 @@ public class Employee {
         this.account = account;
     }
 
-    public int getExpenses() {
+    public BigDecimal getExpenses() {
         return expenses;
     }
 
-    public void setExpenses(int expenses) {
+    public void setExpenses(BigDecimal expenses) {
         this.expenses = expenses;
     }
 
@@ -46,7 +50,7 @@ public class Employee {
     }
 
     public int getTotal(){
-        return day * ALLOWANCE + expenses;
+        return day * ALLOWANCE + expenses.intValue();
     }
 
     public String show(){
