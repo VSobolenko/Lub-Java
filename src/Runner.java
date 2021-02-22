@@ -35,7 +35,7 @@ public class Runner {
             }
         }
 
-        //Находим всю сумму Expenses
+        //Находим всю сумму Expenses/
         int sum = 0;
         for (Employee emp : employees) {
             if (emp != null) {
