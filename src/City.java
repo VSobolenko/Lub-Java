@@ -21,4 +21,16 @@ public class City {
         population = 0;
         square = 0;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public int getSquare() {
+        return square;
+    }
 }
