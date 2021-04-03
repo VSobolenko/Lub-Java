@@ -46,4 +46,10 @@ public class Client {
         }
         return sum;
     }
+    public void OpecAccount(Account acc){
+        acc.OpecAccount();
+    }
+    public void CloseAccount(Account acc){
+        acc.CloseAccount();
+    }
 }
