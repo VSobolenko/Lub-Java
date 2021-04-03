@@ -20,4 +20,30 @@ public class Client {
     public void SortAccount(Comparator<Account> srt){
         Collections.sort(account, srt);
     }
+
+    public int TotalSum(){
+        int sum = 0;
+        for (Account index: account) {
+            sum += index.getMoney();
+        }
+        return sum;
+    }
+    public int TotalSumPositiveBalance(){
+        int sum = 0;
+        for (Account index: account) {
+            if(index.getMoney() > 0){
+                sum += index.getMoney();
+            }
+        }
+        return sum;
+    }
+    public int TotalSumNegativeBalance(){
+        int sum = 0;
+        for (Account index: account) {
+            if(index.getMoney() < 0){
+                sum += index.getMoney();
+            }
+        }
+        return sum;
+    }
 }
