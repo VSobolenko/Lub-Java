@@ -5,10 +5,13 @@ import by.gsu.pms.PriceDiscount;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Programm {
     public static void main(String[] args) {
         int i = 0;
+        float maxPrice = 0, totalPrice = 0;
+
         Commodity[] commodity = new Commodity[6];
         try (BufferedReader reader = new BufferedReader(new FileReader("src\\in.txt")))  {
             String value = reader.readLine();
@@ -26,8 +29,14 @@ public class Programm {
         for (Commodity index: commodity) {
             if(index != null){
                 System.out.println(index.toString());
+                totalPrice += index.getPrice();
+                if (index.getPrice() > maxPrice){
+                    maxPrice = index.getPrice();
+                }
             }
         }
+        System.out.println("Максимальная стоимость: " + maxPrice);
+        System.out.println("Общая стоимость: " + totalPrice);
     }
     public static Commodity GetCommodity(String comm){
         String[] commodity = comm.split(" ");
