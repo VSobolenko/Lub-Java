@@ -17,5 +17,31 @@ public class Runner {
         System.out.println("На какую строку нужно заменить?");
         String s2 = in.nextLine();
 
+        int i = 0, j = 0;
+        String[] buffer = new String[3];
+
+        Employee[] employees = new Employee[5];
+        try (BufferedReader reader = new BufferedReader(new FileReader("src\\in.txt")))  {
+            String value = reader.readLine();
+            while (value != null){
+                while(buffer[2] == null){
+                    buffer[i] = value;
+                    i++;
+                    value= reader.readLine();
+                }
+
+                if(buffer[0].equals(s1)){
+                    buffer[0] = s2;
+                }
+
+                employees[j] = new Employee(buffer[0], BigDecimal.valueOf(Double.parseDouble(buffer[1])), Integer.parseInt(buffer[2]));
+                buffer = new String[3];
+                j++; i=0;
+            }
+        }
+        catch(IOException ex){
+
+            System.out.println(ex.getMessage());
+        }
     }
 }
