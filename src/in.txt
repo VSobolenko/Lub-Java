@@ -1,0 +1,15 @@
+Anton
+1000.1111
+9
+Vladislav
+2000.2222
+20
+Viktor
+3000.3333
+9
+Svyatoslav
+4000.4444
+13
+Vladimir
+5000.555
+1

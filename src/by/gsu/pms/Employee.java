@@ -1,9 +1,10 @@
 package by.gsu.pms;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private static final int ALLOWANCE = 10;
     private String account;
     private BigDecimal expenses;
@@ -65,4 +66,18 @@ public class Employee {
         return ALLOWANCE + ";" + account + ";" + expenses + ";" + day;
     }
 
+    @Override
+    public int compareTo(Employee o2) {
+        Employee e2 = (Employee)o2;
+        if(this.getTotal() > e2.getTotal()){
+            return 1;
+        }
+        else if(this.getTotal()< e2.getTotal()){
+            return -1;
+        }
+        else {
+            return 0;
+        }
+
+    }
 }
