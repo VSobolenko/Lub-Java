@@ -43,5 +43,10 @@ public class Runner {
 
             System.out.println(ex.getMessage());
         }
+        Arrays.sort(employees);
+
+        for (Employee index : employees) {
+            System.out.println(index);
+        }
     }
 }
