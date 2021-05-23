@@ -19,6 +19,16 @@ public class Program {
                 //Убираем лишние символы
                 value = value.trim().replaceAll(" +", " ");
 
+                //Заменяем слова на новые
+                String[] ter = value.split(" ");
+                value = "";
+                for (int i =0; i < ter.length; i++){
+                    if(ter[i].length() == len){
+                        ter[i] = word;
+                    }
+                    value += ter[i];
+                    value += " ";
+                }
                 value = reader.readLine();
             }
         }
