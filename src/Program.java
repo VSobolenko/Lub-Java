@@ -35,6 +35,9 @@ public class Program {
         catch (OutOfMemoryError e){
             System.out.println(e.getMessage());
         }
+        catch (ClassNotFoundException  e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static CitySer GetCitySer(String csvCity){
