@@ -52,7 +52,7 @@ public class City implements Comparable<City> {
 
     @Override
     public String toString() {
-        return "[name=" + name + " population=" + population + " square=" + square + "]";
+        return name + ";" + population + ";" + square;
     }
 
     @Override
