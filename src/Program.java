@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -18,13 +19,26 @@ public class Program {
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
+
+        try(FileWriter writer = new FileWriter("result.txt", false))
+        {
+            for(int[] index : collection){
+                writer.write(String.valueOf(Number.GetSumm(index)));
+                writer.append('\n');
+            }
+            writer.flush();
+        }
+        catch(IOException ex){
+
+            System.out.println(ex.getMessage());
+        }
     }
 
     public static int[] GetArr(String[] str){
-        int[] rez = new int[str.length];
+        int[] result = new int[str.length];
         for(int i = 0; i < str.length; i++){
-            rez[i] = Integer.parseInt(str[i]);
+            result[i] = Integer.parseInt(str[i]);
         }
-        return rez;
+        return result;
     }
 }
