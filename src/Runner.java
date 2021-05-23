@@ -19,6 +19,7 @@ public class Runner {
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
+        
         for (City index: city) {
             if(index != null){
                 System.out.println(index.toString());
