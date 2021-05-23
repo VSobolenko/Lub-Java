@@ -14,6 +14,10 @@ public class Program {
         try (BufferedReader reader = new BufferedReader(new FileReader("in.txt")))  {
             value = reader.readLine();
             while (value != null){
+                //System.out.println(value);
+                text = new StringBuffer(value);
+                //Убираем лишние символы
+                value = value.trim().replaceAll(" +", " ");
 
                 value = reader.readLine();
             }
