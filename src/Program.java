@@ -41,6 +41,9 @@ public class Program {
         catch (ArrayStoreException   e){
             System.out.println(e.getMessage());
         }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static CitySer GetCitySer(String csvCity){
