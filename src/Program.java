@@ -8,5 +8,18 @@ public class Program {
         int len = in.nextInt();
         System.out.print("На какое слово нужно заменять: ");
         String word = in.next();
+
+        String value;
+        StringBuffer text;
+        try (BufferedReader reader = new BufferedReader(new FileReader("in.txt")))  {
+            value = reader.readLine();
+            while (value != null){
+
+                value = reader.readLine();
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }
