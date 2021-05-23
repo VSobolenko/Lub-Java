@@ -20,6 +20,16 @@ public class Runner {
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
+
+        Task.Serializable(citySer);
+
+        Task.Externalizable(cityExtern);
+
+        cityExtern = null;
+        citySer = null;
+
+        citySer = Task.DeSerializable();
+        cityExtern = Task.DeExternalizable();
     }
 
     public static CitySer GetCitySer(String csvCity){
