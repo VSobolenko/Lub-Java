@@ -1,17 +1,18 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Runner {
-    public static <Commodity> void main(String args[]){
+    public static void main(String args[]) throws IOException, ClassNotFoundException {
         int i = 0;
         String value;
-        City[] city = new City[10];
+        CitySer[] citySer = new CitySer[10];
+        CityExtern[] cityExtern =  new CityExtern[10];
 
+        //Читать данные с файла и записать их в массив
         try (BufferedReader reader = new BufferedReader(new FileReader("src\\in.txt")))  {
             value = reader.readLine();
             while (value != null){
-                city[i] = GetCity(value);
+                citySer[i] = GetCitySer(value);
+                cityExtern[i] = GetCityExtern(value);
                 value = reader.readLine();
                 i++;
             }
@@ -19,21 +20,25 @@ public class Runner {
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
-        
-        for (City index: city) {
-            if(index != null){
-                System.out.println(index.toString());
-            }
-        }
     }
 
-    public static City GetCity(String csvCity){
+    public static CitySer GetCitySer(String csvCity){
 
         if (csvCity.equals("null")){
-            return new City();
+            return new CitySer();
         }
 
         String[] city = csvCity.split(";");
-        return new City(city[0], Integer.parseInt(city[1]), Integer.parseInt(city[2]));
+        return new CitySer(city[0], Integer.parseInt(city[1]), Integer.parseInt(city[2]));
+    }
+
+    public static CityExtern GetCityExtern(String csvCity){
+
+        if (csvCity.equals("null")){
+            return new CityExtern();
+        }
+
+        String[] city = csvCity.split(";");
+        return new CityExtern(city[0], Integer.parseInt(city[1]), Integer.parseInt(city[2]));
     }
 }

@@ -1,9 +1,9 @@
 import java.util.Comparator;
 
 public class City implements Comparable<City> {
-    private final String name;
-    private final int population;
-    private final int square;
+    private  String name;
+    private  int population;
+    private  int square;
 
     public City(String name, int population){
         this.name = name;
@@ -70,5 +70,17 @@ public class City implements Comparable<City> {
 
     public int getSquare() {
         return square;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPopulation(int population) {
+        this.population = population;
+    }
+
+    public void setSquare(int square) {
+        this.square = square;
     }
 }
