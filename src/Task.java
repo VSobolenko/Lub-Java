@@ -15,6 +15,17 @@ public class Task {
         }
     }
 
+    public static void Externalizable(CityExtern[] cityExtern) throws IOException {
+        //Серализация Externalizable
+        FileOutputStream fileOutputStream = new FileOutputStream("E:\\Learning\\JavaLearning\\Labs\\save.dat");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+        objectOutputStream.writeObject(cityExtern);
+
+        objectOutputStream.close();
+        System.out.println("Externalizable - OK");
+    }
+
     public static CitySer[] DeSerializable() throws IOException, ClassNotFoundException {
         CitySer[] citySer = null;
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("out.dat")))
@@ -29,4 +40,14 @@ public class Task {
         return citySer;
     }
 
+    public static CityExtern[] DeExternalizable() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("E:\\Learning\\JavaLearning\\Labs\\save.dat");
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+        CityExtern[] cityExtern = (CityExtern[]) objectInputStream.readObject();
+
+        objectInputStream.close();
+        System.out.println("DeExternalizable - OK");
+        return cityExtern;
+    }
 }
