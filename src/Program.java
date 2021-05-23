@@ -29,6 +29,18 @@ public class Program {
                     value += ter[i];
                     value += " ";
                 }
+
+                //Записываем готовое в файл
+                try(FileWriter writer = new FileWriter("out.txt", true))
+                {
+                    BufferedWriter bufferWriter = new BufferedWriter(writer);
+                    bufferWriter.write(value + "\n");
+                    bufferWriter.close();
+                }
+                catch(IOException ex){
+                    System.out.println(ex.getMessage());
+                }
+
                 value = reader.readLine();
             }
         }
