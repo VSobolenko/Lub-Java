@@ -38,6 +38,9 @@ public class Program {
         catch (ClassNotFoundException  e){
             System.out.println(e.getMessage());
         }
+        catch (ArrayStoreException   e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static CitySer GetCitySer(String csvCity){
