@@ -2,6 +2,7 @@ import Core.IGUIFactory;
 import Core.WindowsGUI;
 import DataAccess.IRepository;
 import DataAccess.SqlCertificationRepository;
+import DataAccess.SqlEmployeeRepository;
 import GUI.MainGui;
 
 import javax.swing.*;
@@ -12,8 +13,9 @@ public class Runner {
     private static String connstring = "jdbc:sqlserver://LENOVO-L340:1433;databaseName=ManagementSystem.Database;integratedSecurity=true;";
 
     public static void main(String[] args) throws SQLException {
+
         IRepository crudCert = new SqlCertificationRepository(connstring);
-        IRepository crudEmp = new SqlCertificationRepository(connstring);
+        IRepository crudEmp = new SqlEmployeeRepository(connstring);
 
         JFrame frame = new JFrame("MainGui");
         MainGui mainGui = new MainGui(crudEmp, crudCert);

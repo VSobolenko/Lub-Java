@@ -16,7 +16,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="9dd3a" class="javax.swing.JTextField" binding="idTextField" default-binding="true">
+          <component id="9dd3a" class="javax.swing.JTextField" binding="id">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -26,7 +26,7 @@
               <text value="id"/>
             </properties>
           </component>
-          <component id="be44b" class="javax.swing.JTextField" binding="firstNameTextField" default-binding="true">
+          <component id="be44b" class="javax.swing.JTextField" binding="firstName">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -36,7 +36,7 @@
               <text value="first name"/>
             </properties>
           </component>
-          <component id="ab615" class="javax.swing.JTextField" binding="lastNameTextField" default-binding="true">
+          <component id="ab615" class="javax.swing.JTextField" binding="lastName">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>

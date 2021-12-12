@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface IRepository<T> {
     int Create(T entity);
 
-    T Read(int id);
+    T Read(int id) throws ClassNotFoundException;
 
     ArrayList<T> ReadAll();
 

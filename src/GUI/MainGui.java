@@ -7,6 +7,7 @@ import DataAccess.IRepository;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -21,63 +22,78 @@ public class MainGui {
     private JButton editCertificationButton;
 
     public MainGui(IRepository<Employee> crudEmp, IRepository<Certification> crudCert) {
-        //SetDependency(crudEmp, crudCert);
+        SetDependency(crudEmp, crudCert);
     }
 
     private void SetDependency(IRepository<Employee> crudEmp, IRepository<Certification> crudCert) {
         SetDependencyEmployee(crudEmp);
         SetDependencyCertification(crudCert);
 
-        editEmployeeButton.addActionListener(ShowEmp());
-        editCertificationButton.addActionListener(ShowEmp());
-    }
-
-    private ActionListener ShowEmp() {
-        JFrame frame = new JFrame("EmployeeEdit");
-        EmployeeEdit employeeEdit = new EmployeeEdit();
-
-        frame.setContentPane(employeeEdit.panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        return null;
-    }
-
-    private ActionListener ShowCert() {
-        JFrame frame = new JFrame("Certification");
-        GUI.Certification certification = new GUI.Certification();
-
-        //frame.setContentPane(certification.panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        return null;
     }
 
     protected void SetDependencyEmployee(IRepository<Employee> crud) {
-        showEmployeeButton.addActionListener(ShowEmp(crud));
-    }
+        showEmployeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Employee> data = crud.ReadAll();
+                DefaultTableModel tableModel = new DefaultTableModel(data.size(), 3);
+                empTable.setModel(tableModel);
 
-    protected ActionListener ShowEmp(IRepository<Employee> crud) {
+                Object rowData[] = new Object[data.size() * 3];
+                for (int i = 0; i < data.size(); i++) {
+                    rowData[0] = data.get(i).Id;
+                    rowData[1] = data.get(i).FirstName;
+                    rowData[2] = data.get(i).LastName;
+                    tableModel.addRow(rowData);
+                }
+            }
+        });
+        editEmployeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("EmployeeEdit");
+                EmployeeEdit employeeEdit = new EmployeeEdit(crud);
 
-        ArrayList<Employee> data = crud.ReadAll();
-        DefaultTableModel tableModel = new DefaultTableModel(data.size(), 0);
-        empTable.setModel(tableModel);
-        return null;
+                frame.setContentPane(employeeEdit.panel1);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
     }
 
     protected void SetDependencyCertification(IRepository<Certification> crud) {
-        showCertificationButton.addActionListener(ShowCert(crud));
+        showCertificationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("event cer");
+
+                ArrayList<Certification> data = crud.ReadAll();
+                DefaultTableModel tableModel = new DefaultTableModel(data.size(), 3);
+                certTable.setModel(tableModel);
+
+                Object rowData[] = new Object[data.size() * 3];
+                for (int i = 0; i < data.size(); i++) {
+                    rowData[0] = data.get(i).Id;
+                    rowData[1] = data.get(i).EmployeeId;
+                    rowData[2] = data.get(i).Information;
+                    tableModel.addRow(rowData);
+                }
+            }
+        });
+        editCertificationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Certification");
+                CertificationEdit certification = new CertificationEdit(crud);
+
+                frame.setContentPane(certification.panel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
     }
-
-    protected ActionListener ShowCert(IRepository<Certification> crud) {
-
-        ArrayList<Certification> data = crud.ReadAll();
-        DefaultTableModel tableModel = new DefaultTableModel(data.size(), 0);
-        empTable.setModel(tableModel);
-        return null;
-    }
-
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
@@ -110,11 +126,11 @@ public class MainGui {
         showCertificationButton.setText("Show certification");
         panel.add(showCertificationButton, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         editEmployeeButton = new JButton();
-        editEmployeeButton.setEnabled(false);
+        editEmployeeButton.setEnabled(true);
         editEmployeeButton.setText("Edit employee");
         panel.add(editEmployeeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         editCertificationButton = new JButton();
-        editCertificationButton.setEnabled(false);
+        editCertificationButton.setEnabled(true);
         editCertificationButton.setText("Edit certification");
         panel.add(editCertificationButton, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }

@@ -14,11 +14,10 @@ public class SqlCertificationRepository implements IRepository<Certification> {
 
     @Override
     public int Create(Certification entity) {
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Certification(id, employee_id, information) " +
-                    "VALUES (" + entity.Id +", " + entity.EmployeeId + ", " + entity.Information );
+                    "VALUES (?, ?, ?)");
 
             stmt.setInt(1, entity.Id);
             stmt.setInt(2, entity.EmployeeId);
@@ -39,8 +38,7 @@ public class SqlCertificationRepository implements IRepository<Certification> {
         //ResultSet resultSet = null;
         Certification certification = null;
 
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Certification WHERE id = " + id);
@@ -61,8 +59,9 @@ public class SqlCertificationRepository implements IRepository<Certification> {
         //ResultSet resultSet = null;
         ArrayList<Certification> certifications = null;
 
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(connectingString);
 
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Certification");
@@ -78,7 +77,7 @@ public class SqlCertificationRepository implements IRepository<Certification> {
             }
 
         }
-        catch (SQLException e) {
+        catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return certifications;
@@ -86,35 +85,29 @@ public class SqlCertificationRepository implements IRepository<Certification> {
 
     @Override
     public void Update(Certification entity) {
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
             PreparedStatement stmt = connection.prepareStatement("UPDATE Certification " +
-                    "SET employee_id = " + entity.EmployeeId  + ", information =" + entity.Information +" WHERE id = " + entity.Id);
+                    "SET employee_id = ?, information = ? WHERE id = ?");
 
-            stmt.setInt(1, entity.Id);
-            stmt.setInt(2, entity.EmployeeId);
-            stmt.setString(3, entity.Information);
+            stmt.setInt(1, entity.EmployeeId);
+            stmt.setString(2, entity.Information);
+            stmt.setInt(3, entity.Id);
 
             stmt.executeUpdate();
-
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void Delete(Certification entity) {
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Certification WHERE id = " + entity.Id);
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Certification WHERE id = ?");
 
             stmt.setInt(1, entity.Id);
-            stmt.setInt(2, entity.EmployeeId);
-            stmt.setString(3, entity.Information);
 
             stmt.executeUpdate();
 

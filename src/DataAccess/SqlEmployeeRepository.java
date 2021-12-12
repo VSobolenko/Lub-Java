@@ -15,17 +15,18 @@ public class SqlEmployeeRepository implements IRepository<Employee> {
 
     @Override
     public int Create(Employee entity) {
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Employee(id, first_name, last_name) " +
-                    "VALUES (" + entity.Id +", " + entity.FirstName + ", " + entity.LastName );
+            String request = "INSERT INTO Employee VALUES (? , ? , ?)";
+            PreparedStatement st = connection.prepareStatement(request);
 
-            stmt.setInt(1, entity.Id);
-            stmt.setString(2, entity.FirstName);
-            stmt.setString(3, entity.LastName);
+            //st.executeUpdate(request);
 
-            stmt.executeUpdate();
+            st.setInt(1, entity.Id);
+            st.setString(2, entity.FirstName);
+            st.setString(3, entity.LastName);
+
+            st.executeUpdate();
 
         }
         catch (SQLException e) {
@@ -36,11 +37,13 @@ public class SqlEmployeeRepository implements IRepository<Employee> {
     }
 
     @Override
-    public Employee Read(int id) {
+    public Employee Read(int id) throws ClassNotFoundException {
         Employee employee = null;
 
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
+
 
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Employee WHERE id = " + id);
@@ -50,7 +53,7 @@ public class SqlEmployeeRepository implements IRepository<Employee> {
             employee.FirstName = rs.getString("first_name");
             employee.LastName = rs.getString("last_name");
         }
-        catch (SQLException e) {
+        catch (SQLException  e) {
             e.printStackTrace();
         }
         return employee;
@@ -60,9 +63,14 @@ public class SqlEmployeeRepository implements IRepository<Employee> {
     public ArrayList<Employee> ReadAll() {
         //ResultSet resultSet = null;
         ArrayList<Employee> employees = null;
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");
@@ -86,15 +94,14 @@ public class SqlEmployeeRepository implements IRepository<Employee> {
 
     @Override
     public void Update(Employee entity) {
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
             PreparedStatement stmt = connection.prepareStatement("UPDATE Employee " +
-                    "SET first_name = " + entity.FirstName  + ", last_name =" + entity.LastName +" WHERE id = " + entity.Id);
+                    "SET first_name = ? , last_name = ? WHERE id = ?");
 
-            stmt.setInt(1, entity.Id);
-            stmt.setString(2, entity.FirstName);
-            stmt.setString(3, entity.LastName);
+            stmt.setString(1, entity.FirstName);
+            stmt.setString(2, entity.LastName);
+            stmt.setInt(3, entity.Id);
 
             stmt.executeUpdate();
 
@@ -107,14 +114,11 @@ public class SqlEmployeeRepository implements IRepository<Employee> {
 
     @Override
     public void Delete(Employee entity) {
-        try (Connection connection = DriverManager.getConnection(connectingString);
-             Statement statement = connection.createStatement();) {
+        try (Connection connection = DriverManager.getConnection(connectingString)) {
 
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Employee WHERE id = " + entity.Id);
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Employee WHERE id = ?");
 
             stmt.setInt(1, entity.Id);
-            stmt.setString(2, entity.FirstName);
-            stmt.setString(3, entity.LastName);
 
             stmt.executeUpdate();
 
